@@ -10,14 +10,15 @@ class HUD {
   Slider sliderX;
   Slider sliderY;
   Slider sliderZoom;
-  
+
   Toggle drawHullToggle;
 
   Accordion accordion;
+  PApplet applet;
 
   HUD(PApplet pa) {
     //g3 = (PGraphics3D)g;
-
+    this.applet = pa;
     cp5 = new ControlP5(pa);
 
     color text = color(1, 51, 77);
@@ -49,7 +50,7 @@ class HUD {
 
     sliderZoom = cp5.addSlider("zoom").setBroadcast(false).setPosition(10, 70).setSize(200, 20).setColorCaptionLabel(text)
       .setRange(0.1f, 2.0f).setValue(0).setBroadcast(true).moveTo(posGroup);
-      
+
     drawHullToggle = cp5.addToggle("draw hull").setBroadcast(false).setPosition(10, 100).setSize(20, 20).setColorCaptionLabel(text)
       .setValue(1).setBroadcast(true).moveTo(posGroup);
 
@@ -77,7 +78,7 @@ class HUD {
     scale(0.25);
     noStroke();
     image(preview, 0, 0, preview.width, preview.height);
-    
+
     stroke(0, 255, 0);
     noFill();
 
@@ -94,18 +95,18 @@ class HUD {
     line(0, padB, preview.width, padB);
 
     rect(0, 0, preview.width, preview.height);
-    
+
     noStroke();
     popMatrix();
-    
+
     /*
     pushMatrix();
-    translate(0,height - 30,0);
-    fill(0);
-    palette.display(0.4f);
-    popMatrix();
-    */
-    
+     translate(0,height - 30,0);
+     fill(0);
+     palette.display(0.4f);
+     popMatrix();
+     */
+
     cp5.draw();
     //  End HUD
     //hint(ENABLE_DEPTH_TEST);
@@ -149,7 +150,7 @@ class HUD {
     sliderY.setValue(y);
     sliderZoom.setValue(zoom);
   }
-  
+
   boolean drawHull() {
     int val = (int)(drawHullToggle.getValue());
     if (val == 1) {
@@ -160,6 +161,10 @@ class HUD {
     }
   }
 
+  boolean mouseOverlap() {
+    return cp5.window(applet).isMouseOver();
+  }
+
   void save() {
     cp5.saveProperties(("hud.properties"));
   } 
@@ -167,5 +172,5 @@ class HUD {
   void load() {
     cp5.loadProperties(("hud.properties"));
   }
-
 }
+
