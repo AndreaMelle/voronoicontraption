@@ -1,0 +1,4 @@
+.DS_Store
+*.oni
+workspace/
+application.macosx64/
